@@ -12,7 +12,7 @@ export default function Footer() {
             <img
               src={img}
               alt="Profile"
-              className="rounded-full h-20 w-20 object-cover"
+              className="rounded-full h-22 w-22 object-cover"
             />
             <div>
               <h1 className="text-2xl font-bold">Gurpreet Singh</h1>

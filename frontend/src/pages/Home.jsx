@@ -5,12 +5,13 @@ import Footer from "../components/Footer";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import img from "../assets/images.jpeg";
-import img2 from "../assets/images (1).jpeg";
-import img3 from "../assets/images (2).jpeg";
-import img4 from "../assets/download (2).jpeg";
-import img5 from "../assets/download (1).jpeg";
-import img6 from "../assets/download.jpeg";
+import img from "../assets/first.jpeg";
+import img2 from "../assets/second.jpeg";
+import img3 from "../assets/third.jpeg";
+import img4 from "../assets/seventh.jpeg";
+import img5 from "../assets/fifth.jpg";
+import img6 from "../assets/eighth.jpeg";
+import img7 from "../assets/ninth.jpeg"
 
 export default function Home() {
   const Image = [
@@ -38,13 +39,17 @@ export default function Home() {
       id: "6",
       url: img6,
     },
+    {
+      id: "7",
+      url: img7,
+    },
   ];
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
@@ -85,7 +90,7 @@ export default function Home() {
               <img
                 src={images.url}
                 alt=""
-                className="w-full h-50 sm:h-75 md:h-100 lg:h-125 object-cover"
+                className="w-full h-50 sm:h-75 md:h-100 lg:h-125 object-cover no-border-on-click"
               />
             </div>
           ))}

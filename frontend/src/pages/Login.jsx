@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../assets/rlogo.png";
 import { Link } from "react-router-dom";
 
-export default function Registration() {
+export default function Login() {
   const [pass, setPass] = useState(false);
 
   return (
@@ -18,30 +18,10 @@ export default function Registration() {
       {/* Form Section */}
       <div className="w-full md:w-[45%] py-10">
         <h1 className="font-semibold text-4xl mb-8 text-center">
-          Register Now
+          Login
         </h1>
 
         <form className="space-y-6">
-          {/* First + Last Name */}
-          <div className="flex flex-col md:flex-row gap-6">
-            <input
-              type="text"
-              placeholder="First Name"
-              className="border-b border-blue-500 w-full focus:outline-none pb-1"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="border-b border-blue-500 w-full focus:outline-none pb-1"
-            />
-          </div>
-
-          {/* Address */}
-          <input
-            type="text"
-            placeholder="Address"
-            className="border-b border-blue-500 w-full focus:outline-none pb-1"
-          />
 
           {/* Phone */}
           <input
@@ -82,16 +62,15 @@ export default function Registration() {
 
           {/* Checkbox */}
           <div className="flex items-center gap-2">
-            <input type="checkbox" id="check1" />
-            <label htmlFor="check1">Want to get call from us.</label>
-            <Link to="/login" className="text-blue-500 hover:underline ms-auto">
-              Already Registered?
+            
+            <Link to="/register" className="text-blue-500 hover:underline ms-auto">
+              Not a member yet? Register now.
             </Link>
           </div>
 
           {/* Button */}
-          <button className="bg-blue-500 text-white hover:bg-blue-700 hover:cursor-pointer w-full py-2 rounded transition">
-            Register now
+          <button className="bg-blue-500 text-white hover:cursor-pointer hover:bg-blue-700 w-full py-2 rounded transition">
+            Login
           </button>
         </form>
       </div>
@@ -104,9 +83,7 @@ export default function Registration() {
           className="w-[70%] max-w-sm object-contain"
         />
         <p className="text-gray-500 mt-4 max-w-md">
-          Join us today and experience the best of Kalsi Turban! Register now to
-          unlock exclusive benefits, stay updated on our latest offerings, and
-          be part of our vibrant community.
+            Welcome back! Please enter your details to login to your account and continue your journey with us. We're excited to have you back and look forward to serving you again!
         </p>
       </div>
     </div>

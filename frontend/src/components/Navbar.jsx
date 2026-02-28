@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Dropdown from "./Dropdown";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
     <div className="bg-orange-500 text-white">
       <div className="hidden md:flex flex-col md:flex-row md:justify-around items-center gap-3 md:gap-5 h-auto md:h-16 py-4 md:py-0">
-        <Link to="#" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
+        <Link to="/" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
           Home
         </Link>
 
-        <Link to="#" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
+        <Link to="/about" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
           About Us
         </Link>
 
@@ -19,22 +21,33 @@ export default function Navbar() {
           Rewards
         </Link>
 
-        <Link to="#" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
+        <Link to="/booking" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
           Book Now
         </Link>
+
+        {/* register and profile button combine */}
 
         <Link to="/register" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500">
           Register Now
         </Link>
+
+        <div className="h-10 w-10 rounded-full border" onClick={()=>{setIsProfileOpen(!isProfileOpen)}}>
+          <img src="" alt="img" />
+        </div>
+
+        {
+          isProfileOpen && <Dropdown />
+        }
+
       </div>
       <div className="flex">
         {isOpen && (
           <div className="flex flex-col md:hidden bg-orange-500" onClick={()=>{setIsOpen(false)}}>
-            <Link className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500 w-40">
+            <Link to="/" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500 w-40">
               Home
             </Link>
 
-            <Link className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500 w-40">
+            <Link to="/about" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500 w-40">
               About Us
             </Link>
 
@@ -42,7 +55,7 @@ export default function Navbar() {
               Rewards
             </Link>
 
-            <Link className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500 w-40">
+            <Link to="/booking" className="hover:cursor-pointer px-4 py-2 rounded hover:border hover:border-white border border-orange-500 w-40">
               Book Now
             </Link>
 

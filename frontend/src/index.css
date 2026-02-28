@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+.dropDownProfile{
+    position: absolute;
+    top: 10.5rem;
+    right: 1.25rem;
+    width: 120px;
+    color: black;
+    z-index: 20;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+.dropDownProfile::before{
+    position:absolute;
+    transform: rotate(45deg);
+    background-color: white;
+}

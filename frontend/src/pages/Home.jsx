@@ -58,19 +58,21 @@ export default function Home() {
       {
         breakpoint: 1024, // tablets
         settings: {
-          arrows: false,
+          arrows: true,
         },
       },
       {
         breakpoint: 768, // small tablets
         settings: {
-          arrows: false,
+          arrows: true,
         },
       },
       {
         breakpoint: 480, // mobile
+        
         settings: {
-          arrows: false,
+          arrows: true,
+          slidesToShow: 1,
           dots: true,
         },
       },

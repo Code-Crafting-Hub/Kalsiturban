@@ -1,9 +1,51 @@
 import React, { useState } from "react";
 import Logo from "../assets/rlogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Registration() {
   const [pass, setPass] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [password, setPassword] = useState("");
+
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(!firstName && !phoneNumber && !password){
+      alert("Please fill all the fields");
+      return;
+    }
+    try {
+      const data = {
+        firstName,
+        lastName,
+        address,
+        phoneNumber,
+        password,
+      };
+      const response = await axios.post(`${backendURL}/users/register`, data);
+      const {message, success, errors} = response.data;
+      if(errors){
+        alert(errors);
+        return;
+      }else if(message){
+        alert(message);
+      }
+      if(success){
+        alert("User created successfully");
+      }
+      alert(response.data.message);
+      navigate("/login");
+    } catch (err) {
+      console.log("Error in registration",err);
+    }
+  };
 
   return (
     <div className="flex flex-col md:flex-row lg:w-[80%] mx-auto min-h-screen justify-center items-center text-gray-900 px-4 md:px-0">
@@ -21,18 +63,24 @@ export default function Registration() {
           Register Now
         </h1>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* First + Last Name */}
           <div className="flex flex-col md:flex-row gap-6">
             <input
               type="text"
               placeholder="First Name"
               className="border-b border-blue-500 w-full focus:outline-none pb-1"
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
             />
             <input
               type="text"
               placeholder="Last Name"
               className="border-b border-blue-500 w-full focus:outline-none pb-1"
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
             />
           </div>
 
@@ -41,6 +89,9 @@ export default function Registration() {
             type="text"
             placeholder="Address"
             className="border-b border-blue-500 w-full focus:outline-none pb-1"
+            onChange={(e) => {
+              setAddress(e.target.value);
+            }}
           />
 
           {/* Phone */}
@@ -50,6 +101,9 @@ export default function Registration() {
             className="w-full border-b border-blue-500 focus:outline-none pb-1 
             [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
             [&::-webkit-inner-spin-button]:appearance-none"
+            onChange={(e) => {
+              setPhoneNumber(e.target.value);
+            }}
           />
 
           {/* Password */}
@@ -60,6 +114,9 @@ export default function Registration() {
               className="w-[95%] focus:outline-none pb-1 
             [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
             [&::-webkit-inner-spin-button]:appearance-none"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
             <div
               onClick={() => {
@@ -67,7 +124,7 @@ export default function Registration() {
               }}
               className="ms-auto hover:cursor-pointer"
             >
-                {pass ? "Hide" : "Show"}
+              {pass ? "Hide" : "Show"}
             </div>
           </div>
 
@@ -90,7 +147,10 @@ export default function Registration() {
           </div>
 
           {/* Button */}
-          <button className="bg-blue-500 text-white hover:bg-blue-700 hover:cursor-pointer w-full py-2 rounded transition">
+          <button
+            className="bg-blue-500 text-white hover:bg-blue-700 hover:cursor-pointer w-full py-2 rounded transition"
+            type="submit"
+          >
             Register now
           </button>
         </form>

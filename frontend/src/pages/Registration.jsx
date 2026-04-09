@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Logo from "../assets/rlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Registration() {
   const [pass, setPass] = useState(false);
@@ -17,8 +18,8 @@ export default function Registration() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!firstName && !phoneNumber && !password){
-      alert("Please fill all the fields");
+    if (!firstName || !phoneNumber || !password) {
+      toast.error("Please fill all the fields");
       return;
     }
     try {
@@ -30,25 +31,42 @@ export default function Registration() {
         password,
       };
       const response = await axios.post(`${backendURL}/users/register`, data);
-      const {message, success, errors} = response.data;
-      if(errors){
-        alert(errors);
-        return;
-      }else if(message){
-        alert(message);
+
+      if (response.status === 201) {
+        toast.success(`${response.data.message}`);
+        //login user after registration
+        const loginResponse = await axios.post(
+          `${backendURL}/users/login`,
+          {
+            phoneNumber,
+            password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        );
+        localStorage.setItem("token", loginResponse.data.token);
+        localStorage.setItem("user", JSON.stringify(loginResponse.data.user.firstName));
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
       }
-      if(success){
-        alert("User created successfully");
+    } catch (error) {
+      const { errors, message } = error.response.data;
+      if (errors) {
+        toast.error(`${errors}`);
+      } else if (message) {
+        toast.error(`${message}`);
       }
-      alert(response.data.message);
-      navigate("/login");
-    } catch (err) {
-      console.log("Error in registration",err);
     }
   };
 
   return (
     <div className="flex flex-col md:flex-row lg:w-[80%] mx-auto min-h-screen justify-center items-center text-gray-900 px-4 md:px-0">
+      <Toaster />
       {/* Back Button */}
       <Link
         to="/"

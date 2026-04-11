@@ -14,6 +14,7 @@ export default function Profile() {
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [confPassword, setConfPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [newProfile, setNewProfile] = useState();
   const [popUp, setPopUp] = useState(false);
@@ -41,7 +42,7 @@ export default function Profile() {
 
   const changeImageHandler = async (e) => {
     e.preventDefault();
-    console.log(newProfile)
+    console.log(newProfile);
     try {
       const profile = new FormData();
       profile.append("image", newProfile);
@@ -56,10 +57,10 @@ export default function Profile() {
       console.log(response);
       if (response.status === 200) {
         toast.success(response.data.message);
-        const {firstName, image} = response.data.updatedUser;
+        const { firstName, image } = response.data.updatedUser;
         localStorage.setItem(
           "user",
-          JSON.stringify({firstName, image: image.url}),
+          JSON.stringify({ firstName, image: image.url }),
         );
         setTimeout(() => {
           navigate(0);
@@ -72,7 +73,44 @@ export default function Profile() {
       } else {
         toast.error(`${err.message}`);
       }
-      console.log(error)
+      console.log(error);
+    }
+  };
+
+  const updateProfileHandler = async (e) => {
+    e.preventDefault();
+    try {
+      if (password !== confPassword) {
+        return toast.error("Password not match");
+      }
+      if (!firstName || !lastName || !address || !phoneNumber || !password) {
+        return toast.error("Please fill all the fields");
+      }
+      const data = {
+        firstName,
+        lastName,
+        password,
+        address,
+        phoneNumber,
+      };
+      const response = await axios.post(`${backendURL}/users/profile/update`,data,{
+        withCredentials:true,
+      });
+      console.log(response.data)
+      if(response.status === 200){
+        toast.success(`${response.data.message}`)
+        const { firstName, image } = response.data.updatedUser;
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ firstName, image: image.url }),
+        );
+        setTimeout(()=>{
+          navigate(0);
+        },1500)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.message);
     }
   };
 
@@ -108,7 +146,7 @@ export default function Profile() {
               Edit Profile
             </h2>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={updateProfileHandler}>
               {/* First Name */}
               <div>
                 <label className="block text-gray-600 mb-1">First Name</label>
@@ -175,6 +213,10 @@ export default function Profile() {
                     type="password"
                     placeholder="New Password"
                     className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </div>
 
@@ -186,6 +228,10 @@ export default function Profile() {
                     type="password"
                     placeholder="Confirm Password"
                     className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                    value={confPassword}
+                    onChange={(e) => {
+                      setConfPassword(e.target.value);
+                    }}
                   />
                 </div>
               </div>

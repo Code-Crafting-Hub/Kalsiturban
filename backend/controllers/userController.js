@@ -76,7 +76,6 @@ const login = async (req, res) => {
   }
 };
 
-//check again
 const profileUpdate = async (req, res) => {
   try {
     const image = req.files.image;
@@ -90,7 +89,7 @@ const profileUpdate = async (req, res) => {
     }
 
     //destroying previous image from cloudinary if exist
-    const existingProfile = await userModel.findOne({ _id:userId });
+    const existingProfile = await userModel.findOne({ _id: userId });
     if (existingProfile) {
       await cloudinary.uploader.destroy(existingProfile.image.public_id);
     }
@@ -112,7 +111,6 @@ const profileUpdate = async (req, res) => {
     };
 
     //creating or updating user profile
-    // const profileUrl = result.secure_url;
     const updatedUser = await userModel.findOneAndUpdate(
       { _id: userId },
       data,
@@ -133,13 +131,41 @@ const profileUpdate = async (req, res) => {
 const getData = async (req, res) => {
   try {
     const userId = req.user.id;
-    const data = await userModel.findOne({ _id:userId });
+    const data = await userModel.findOne({ _id: userId });
     if (!data) {
       return res.status(400).json({ message: "User not found" });
     }
     res.status(200).json(data);
   } catch (err) {
     console.log("Error in getting user data", err);
+  }
+};
+
+const updateData = async (req, res) => {
+  try {
+    const { firstName, lastName, password, address, phoneNumber } = req.body;
+    const userId = req.user.id;
+    if (!firstName || !lastName || !password || !address || !phoneNumber) {
+      return res.status(400).json({ message: "Please fill all fields" });
+    }
+    const salt = 10;
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const data = {
+      firstName,
+      lastName,
+      address,
+      phoneNumber,
+      password: hashedPassword,
+    };
+    const updatedUser = await userModel.findByIdAndUpdate(
+      { _id: userId },
+      data,
+    );
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", updatedUser });
+  } catch (error) {
+    console.log("Error in updating profile", error);
   }
 };
 
@@ -152,4 +178,4 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, profileUpdate, logout, getData };
+module.exports = { signup, login, profileUpdate, logout, getData, updateData };

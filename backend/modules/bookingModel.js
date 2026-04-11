@@ -7,17 +7,35 @@ const bookingSchema = new mongoose.Schema(
       ref: "userModel",
       required: true,
     },
-    purpose: {
-      type: String,
-      required: true,
-    },
-    from: {
-      type: String,
-      required: true,
-    },
-    to: {
-      type: String,
-      required: true,
+    bookingDetail: {
+      firstName: {
+        type: String,
+        required: true,
+      },
+      lastName: {
+        type: String,
+        required: true,
+      },
+      phoneNumber: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+      purpose: {
+        type: String,
+        required: true,
+      },
+      from: {
+        type: String,
+        required: true,
+      },
+      to: {
+        type: String,
+        required: true,
+      },
     },
   },
   {

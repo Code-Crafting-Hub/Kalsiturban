@@ -30,7 +30,9 @@ export default function Registration() {
         phoneNumber,
         password,
       };
-      const response = await axios.post(`${backendURL}/users/register`, data);
+      const response = await axios.post(`${backendURL}/users/register`, data,{
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (response.status === 201) {
         toast.success(`${response.data.message}`);
@@ -49,7 +51,11 @@ export default function Registration() {
           },
         );
         localStorage.setItem("token", loginResponse.data.token);
-        localStorage.setItem("user", JSON.stringify(loginResponse.data.user.firstName));
+        const {firstName, image} = loginResponse.data.user;
+        localStorage.setItem(
+          "user",
+          JSON.stringify({firstName, image: image.url}),
+        );
         setTimeout(() => {
           navigate("/");
         }, 1500);

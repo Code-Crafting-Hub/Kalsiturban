@@ -1,16 +1,26 @@
 const userModel = require("../modules/userModel");
 const bcrypt = require("bcrypt");
-const profileModel = require("../modules/profileModel");
 const cloudinary = require("cloudinary").v2;
 const jwt = require("jsonwebtoken");
+const path = require("path");
 require("dotenv").config();
 
 const signup = async (req, res) => {
   try {
     const { firstName, lastName, address, phoneNumber, password } = req.body;
+    const image = path.join(__dirname, "../assets/Logo.jpeg");
     if (!firstName || !phoneNumber || !password) {
       return res.status(400).json({ message: "Please fill all the fields" });
     }
+
+    // image uploading
+    const result = await cloudinary.uploader.upload(image);
+    if (!result || result.error) {
+      return res
+        .status(500)
+        .json({ message: "Internal server error in uploading image" });
+    }
+
     const userExist = await userModel.findOne({ phoneNumber });
     if (userExist) {
       return res.status(400).json({ errors: "User already exist" });
@@ -23,12 +33,16 @@ const signup = async (req, res) => {
       address,
       phoneNumber,
       password: hashPassword,
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
     });
     user.save().then((user) => {
       res.status(201).json({ message: "User created successfully", user });
     });
   } catch (err) {
-    console.log("Error in signup user");
+    console.log("Error in signup user", err);
   }
 };
 
@@ -75,8 +89,8 @@ const profileUpdate = async (req, res) => {
     }
 
     //destroying previous image from cloudinary if exist
-    const existingProfile = await profileModel.findOne({userId});
-    if(existingProfile){
+    const existingProfile = await userModel.findOne({ _id: userId });
+    if (existingProfile) {
       await cloudinary.uploader.destroy(existingProfile.image.public_id);
     }
 
@@ -90,7 +104,6 @@ const profileUpdate = async (req, res) => {
     }
 
     const data = {
-      userId,
       image: {
         public_id: result.public_id,
         url: result.secure_url,
@@ -98,9 +111,8 @@ const profileUpdate = async (req, res) => {
     };
 
     //creating or updating user profile
-    const profileUrl = result.secure_url;
-    const updatedUser = await profileModel.findOneAndUpdate(
-      { userId: userId },
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id: userId },
       data,
       {
         returnDocument: "after",
@@ -110,19 +122,60 @@ const profileUpdate = async (req, res) => {
     );
     res
       .status(200)
-      .json({ message: "Profile updated successfully", profileUrl });
+      .json({ message: "Profile updated successfully", updatedUser });
   } catch (err) {
     console.log("Error in updating profile", err);
   }
 };
 
-const logout = async (req,res)=>{
-  try{
+const getData = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const data = await userModel.findOne({ _id: userId });
+    if (!data) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    res.status(200).json(data);
+  } catch (err) {
+    console.log("Error in getting user data", err);
+  }
+};
+
+const updateData = async (req, res) => {
+  try {
+    const { firstName, lastName, password, address, phoneNumber } = req.body;
+    const userId = req.user.id;
+    if (!firstName || !lastName || !password || !address || !phoneNumber) {
+      return res.status(400).json({ message: "Please fill all fields" });
+    }
+    const salt = 10;
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const data = {
+      firstName,
+      lastName,
+      address,
+      phoneNumber,
+      password: hashedPassword,
+    };
+    const updatedUser = await userModel.findByIdAndUpdate(
+      { _id: userId },
+      data,
+    );
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", updatedUser });
+  } catch (error) {
+    console.log("Error in updating profile", error);
+  }
+};
+
+const logout = async (req, res) => {
+  try {
     res.clearCookie("token");
-    res.status(200).json({message: "Logout successful"});
-  }catch(err){
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
     console.log("error in logging out");
   }
-}
+};
 
-module.exports = { signup, login, profileUpdate, logout };
+module.exports = { signup, login, profileUpdate, logout, getData, updateData };

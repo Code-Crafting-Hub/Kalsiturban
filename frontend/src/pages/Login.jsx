@@ -26,11 +26,14 @@ export default function Login() {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
       if (response.status === 200) {
         toast.success(`${response.data.message}`);
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user.firstName));
+        const {firstName, image} = response.data.user;
+        localStorage.setItem(
+          "user",
+          JSON.stringify({firstName, image: image.url}),
+        );
         setTimeout(() => {
           navigate("/");
         }, 1500);
@@ -44,7 +47,6 @@ export default function Login() {
       } else {
         toast.error(`${resp.data}`);
       }
-      console.log(resp);
     }
   };
 

@@ -26,7 +26,6 @@ export default function Login() {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
       if (response.status === 200) {
         toast.success(`${response.data.message}`);
         localStorage.setItem("token", response.data.token);
@@ -48,7 +47,6 @@ export default function Login() {
       } else {
         toast.error(`${resp.data}`);
       }
-      console.log(resp);
     }
   };
 

@@ -34,9 +34,12 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-connectDB();
+app.use(async (req, res, next) => {
+    await dbConnection();
+    next();
+});
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/booking", bookingRouter);
 
-module.exports = { app };
+module.exports = app;

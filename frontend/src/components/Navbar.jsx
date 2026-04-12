@@ -45,12 +45,12 @@ export default function Navbar() {
             ) : (
               <div className="relative">
                 <button
-                  className="flex items-center gap-3 focus:outline-none group"
+                  className="flex items-center gap-3 border border-orange-500 py-1 rounded-lg px-4 focus:outline-none group hover:border-white hover:cursor-pointer"
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                 >
                   <div className="h-10 w-10 rounded-full border-2 border-white overflow-hidden shadow-sm">
                     <img
-                      src={user.image?.url || user.image || "https://via.placeholder.com/40"}
+                      src={user.image?.url || user.image}
                       alt="User"
                       className="w-full h-full object-cover"
                     />

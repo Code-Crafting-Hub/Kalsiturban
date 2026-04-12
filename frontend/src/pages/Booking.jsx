@@ -167,7 +167,7 @@ export default function Booking() {
                 Purpose
               </option>
               <option value="Tying turban">For tying turban</option>
-              <option value="camp">For organizing a camp</option>
+              <option value="Camp">For organizing a camp</option>
             </select>
 
             {/* Date & Time */}

@@ -67,9 +67,9 @@ export default function Booking() {
       });
       if (response.status === 201) {
         toast.success(`${response.data.message}`);
-        setTimeout(() => {
-          navigate(0);
-        }, 1500);
+        setPurpose("");
+        setFrom("");
+        setTo("");
       }
     } catch (error) {
       const message = error.response.data.message;

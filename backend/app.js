@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://kalsiturban.vercel.app",
+    origin: "https://kalsiturban.vercel.app/",
     credentials: true,
   }),
 );

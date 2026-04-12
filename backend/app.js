@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: "https://kalsiturban.vercel.app",
     credentials: true,
   }),
 );
@@ -34,12 +34,10 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-// app.use(async (req, res, next) => {
-//     await dbConnection();
-//     next();
-// });
-
-dbConnection()
+app.use(async (req, res, next) => {
+    await dbConnection();
+    next();
+});
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/booking", bookingRouter);

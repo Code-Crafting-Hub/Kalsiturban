@@ -64,11 +64,11 @@ const login = async (req, res) => {
       expiresIn: "1d",
     });
     const cookieOptions = {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true, // Prevents JavaScript access (Security)
+      secure: true,   // REQUIRED: Cookie only sent over HTTPS (Vercel)
+      sameSite: "none", // REQUIRED: Allows cross-site (Render/Backend -> Vercel/Frontend)
       path: "/",
-      secure: true,      // MUST be true for HTTPS (Vercel)
-      sameSite: "none",
     };
     res.cookie("token", token, cookieOptions);
     res.status(200).json({ message: "Login successful", user, token });

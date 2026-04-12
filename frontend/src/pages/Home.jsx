@@ -12,6 +12,8 @@ import img4 from "../assets/seventh.jpeg";
 import img5 from "../assets/fifth.jpg";
 import img6 from "../assets/eighth.jpeg";
 import img7 from "../assets/ninth.jpeg"
+import About1 from "../components/About1";
+import Booking from "../components/Booking1";
 
 export default function Home() {
   const Image = [
@@ -98,6 +100,9 @@ export default function Home() {
           ))}
         </Slider>
       </div>
+
+      <About1/>
+      <Booking/>
 
       {/* Footer */}
       <Footer />

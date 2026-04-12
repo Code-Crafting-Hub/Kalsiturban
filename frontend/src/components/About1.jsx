@@ -1,13 +1,10 @@
 import React from "react";
-import Logo from "../components/Logo";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 // Import your team images
 import img1 from '../assets/person1.jpeg'; // Content Specialist
 import img2 from '../assets/person2.jpeg'; // UI & Programmer
 import img3 from '../assets/person3.jpeg'; // Project File Manager
 
-export default function About() {
+export default function About1() {
   const team = [
     {
       id: 1,
@@ -37,8 +34,6 @@ export default function About() {
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
-      <Logo />
-      <Navbar />
 
       {/* Hero Header */}
       <div className="py-20 bg-white border-b border-gray-100">
@@ -98,7 +93,6 @@ export default function About() {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,4 @@
 import React from "react";
-import Logo from "../components/Logo";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import booking from "../assets/booking.jpeg";
 import { useState } from "react";
 import axios from "axios";
@@ -84,8 +81,6 @@ export default function Booking() {
 
   return (
     <>
-      <Logo />
-      <Navbar />
       <Toaster />
 
       <div className="w-full flex flex-col md:flex-row">
@@ -200,7 +195,6 @@ export default function Booking() {
         </div>
       </div>
 
-      <Footer />
     </>
   );
 }

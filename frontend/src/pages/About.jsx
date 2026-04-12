@@ -2,69 +2,103 @@ import React from "react";
 import Logo from "../components/Logo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import img from '../assets/stand1.png'
+// Import your team images
+import img1 from '../assets/person1.jpeg'; // Content Specialist
+import img2 from '../assets/person2.jpeg'; // UI & Programmer
+import img3 from '../assets/person3.jpeg'; // Project File Manager
 
 export default function About() {
+  const team = [
+    {
+      id: 1,
+      name: "Content Strategist",
+      role: "Website Content",
+      description: "Responsible for the entire website's narrative, ensuring all information is accurate, engaging, and well-structured.",
+      image: img1,
+      color: "border-orange-500"
+    },
+    {
+      id: 2,
+      name: "Lead Developer",
+      role: "UI & Programming",
+      description: "The architect behind the visual interface and core logic. Manages everything from the look (UI) to the code performance.",
+      image: img2,
+      color: "border-blue-600"
+    },
+    {
+      id: 3,
+      name: "Project Coordinator",
+      role: "Project File Management",
+      description: "Handles the assembly of final project files, documentation, and quality checks for the final submission.",
+      image: img3,
+      color: "border-green-500"
+    }
+  ];
+
   return (
-    <>
+    <div className="bg-gray-50 min-h-screen font-sans">
       <Logo />
       <Navbar />
 
-      <div className="flex flex-col md:flex-row items-center w-full max-w-6xl mx-auto px-4 md:px-8 gap-10">
-
-        
-
-        {/* Text Section */}
-        <div className="w-full md:w-1/2 text-gray-800 space-y-5 text-center md:text-left my-8">
-        <h1 className="text-4xl font-semibold text-center">About Me</h1>
-
-          <p className="font-semibold text-lg">Sat Sri Akal,</p>
-
-          <p>
-            My name is Gurpreet Singh, and I am proudly associated with
-            Chamkaur Sahib. I am a dedicated and disciplined individual who
-            believes in professionalism, integrity, and continuous growth.
-            My values are deeply rooted in my culture and community, which
-            guide both my personal and professional journey.
+      {/* Hero Header */}
+      <div className="py-20 bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
+            Our <span className="text-orange-500">Project Team</span>
+          </h1>
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+            A collaborative effort for our college submission, combining content, design, and technical execution.
           </p>
-
-          <p>
-            With a strong commitment to excellence, I focus on building
-            meaningful connections and contributing positively in every
-            environment I am part of. I believe that consistency, hard work,
-            and clear vision are the foundations of long-term success.
-          </p>
-
-          <p>
-            Over time, I have developed the ability to adapt, learn quickly,
-            and take responsibility with confidence. My approach is always
-            goal-oriented, with attention to detail and a strong sense of
-            accountability.
-          </p>
-
-          <p>
-            My objective is to continue growing professionally, expand my
-            impact, and collaborate with individuals and organizations that
-            value dedication and integrity.
-          </p>
-
-          <div>
-            <p className="mt-6">Sincerely,</p>
-            <p className="font-semibold">Gurpreet Singh</p>
-          </div>
-
         </div>
-        {/* Image Section */}
-        <div className="w-full md:w-1/2 flex justify-center">
-          <img
-            src={img}
-            alt="Gurpreet Singh"
-            className="h-166"
-          />
+      </div>
+
+      {/* Team Cards Section */}
+      <div className="max-w-7xl mx-auto px-4 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {team.map((member) => (
+            <div key={member.id} className="group">
+              {/* Image Box */}
+              <div className={`relative overflow-hidden rounded-3xl border-b-8 ${member.color} shadow-lg transition-transform duration-500 group-hover:-translate-y-3`}>
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-[450px] object-cover transition-all duration-500"
+                />
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-8 text-center">
+                  <p className="text-white text-base leading-relaxed">
+                    {member.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Info Box */}
+              <div className="mt-8 text-center">
+                <p className="text-orange-500 font-black text-xs uppercase tracking-[0.2em] mb-2">
+                  {member.role}
+                </p>
+                <h3 className="text-2xl font-bold text-gray-800">
+                  {member.name}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* College Project Meta Info */}
+      <div className="bg-orange-500 py-16 text-white mb-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">The Project Goal</h2>
+          <p className="text-orange-100 text-lg leading-relaxed">
+            Our team focuses on creating a seamless user experience. By dividing our strengths between 
+            <strong> Content</strong>, <strong>Programming</strong>, and <strong>Project Management</strong>, 
+            we ensure a high-quality submission that meets all academic standards.
+          </p>
         </div>
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }

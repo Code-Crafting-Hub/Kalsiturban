@@ -7,7 +7,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 export default function Booking() {
   const [firstName, setFirstName] = useState("");
@@ -19,7 +18,6 @@ export default function Booking() {
   const [to, setTo] = useState("");
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const navigate = useNavigate();
 
   const gettingData = async () => {
     try {
@@ -67,9 +65,9 @@ export default function Booking() {
       });
       if (response.status === 201) {
         toast.success(`${response.data.message}`);
-        setTimeout(() => {
-          navigate(0);
-        }, 1500);
+        setPurpose("");
+        setFrom("");
+        setTo("");
       }
     } catch (error) {
       const message = error.response.data.message;

@@ -1,5 +1,5 @@
 const express = require("express");
-const { connectDB } = require("./database/database");
+const { dbConnection }= require("./database/database");
 const userRouter = require("./routes/userRoutes");
 const cors = require("cors");
 const cloudinary = require("cloudinary").v2;
@@ -34,10 +34,12 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-app.use(async (req, res, next) => {
-    await dbConnection();
-    next();
-});
+// app.use(async (req, res, next) => {
+//     await dbConnection();
+//     next();
+// });
+
+dbConnection()
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/booking", bookingRouter);

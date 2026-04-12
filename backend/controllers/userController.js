@@ -69,6 +69,7 @@ const login = async (req, res) => {
       secure: true,   // REQUIRED: Cookie only sent over HTTPS (Vercel)
       sameSite: "none", // REQUIRED: Allows cross-site (Render/Backend -> Vercel/Frontend)
       path: "/",
+      partitioned: true,
     };
     res.cookie("token", token, cookieOptions);
     res.status(200).json({ message: "Login successful", user, token });

@@ -1,5 +1,5 @@
 const express = require("express");
-const dbConnection = require("./database/database");
+const {dbConnection} = require("./database/database");
 const userRouter = require("./routes/userRoutes");
 const cors = require("cors");
 const cloudinary = require("cloudinary").v2;

@@ -1,5 +1,5 @@
 const express = require("express");
-const { connectDB } = require("./database/database");
+const connectDB = require("./database/database");
 const userRouter = require("./routes/userRoutes");
 const cors = require("cors");
 const cloudinary = require("cloudinary").v2;
@@ -35,7 +35,7 @@ cloudinary.config({
 });
 
 app.use(async (req, res, next) => {
-    await dbConnection();
+    await connectDB();
     next();
 });
 

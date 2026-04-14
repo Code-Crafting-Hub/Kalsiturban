@@ -118,6 +118,9 @@ export default function Orders() {
                               Booking ID: {booking._id}
                             </p>
                           </div>
+                          <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                            {booking.bookingDetail.status}
+                        </span>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-50 pt-4">

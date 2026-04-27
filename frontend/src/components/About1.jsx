@@ -1,7 +1,7 @@
 import React from "react";
 // Import your team images
 import img1 from '../assets/person1.jpeg'; // Content Specialist
-import img2 from '../assets/person2.jpeg'; // UI & Programmer
+import img2 from '../assets/person2.png'; // UI & Programmer
 import img3 from '../assets/person3.png'; // Project File Manager
 
 export default function About1() {

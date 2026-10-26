@@ -8,27 +8,11 @@ export default function About1() {
   const team = [
     {
       id: 1,
-      name: "Content Strategist",
-      role: "Website Content",
-      description: "Responsible for the entire website's narrative, ensuring all information is accurate, engaging, and well-structured.",
+      name: "Gurpreet Singh",
+      role: "CEO",
+      description: "",
       image: img1,
       color: "border-orange-500"
-    },
-    {
-      id: 2,
-      name: "Lead Developer",
-      role: "UI & Programming",
-      description: "The architect behind the visual interface and core logic. Manages everything from the look (UI) to the code performance.",
-      image: img2,
-      color: "border-blue-600"
-    },
-    {
-      id: 3,
-      name: "Project Coordinator",
-      role: "Project File Management",
-      description: "Handles the assembly of final project files, documentation, and quality checks for the final submission.",
-      image: img3,
-      color: "border-green-500"
     }
   ];
 

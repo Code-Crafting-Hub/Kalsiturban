@@ -1,8 +1,15 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
+import About1 from '../components/About1'
+import Footer from "../components/Footer"
 
 function About() {
   return (
-    <div>This page is in under construction</div>
+    <>
+    <Navbar/>
+    <About1/>
+    <Footer/>
+    </>
   )
 }
 
